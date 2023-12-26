@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rss_interactive_v2/constants/color_constants.dart';
+import 'package:rss_interactive_v2/controllers/auth_controller.dart';
 import 'package:rss_interactive_v2/controllers/model_controller.dart';
 import 'package:rss_interactive_v2/models/news_model.dart';
-import 'package:rss_interactive_v2/pages/profile_page.dart';
 import 'package:rss_interactive_v2/widgets/news_card.dart';
 
 // ignore: must_be_immutable
@@ -11,10 +11,11 @@ class NewsPage extends StatelessWidget {
   NewsPage({super.key});
 
   ModelController modelController = Get.find();
+  AuthController controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
-    return emailVerification
+    return controller.emailVerification.value
         ? FutureBuilder(
             future: modelController.fillNewsList,
             builder: (context, snapshot) {

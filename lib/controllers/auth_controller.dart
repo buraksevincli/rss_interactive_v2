@@ -1,9 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-import 'package:rss_interactive_v2/pages/profile_page.dart';
 
 class AuthController extends GetxController {
   late FirebaseAuth auth;
+  RxBool loggedIn = false.obs;
+  RxBool emailVerification = false.obs;
 
   @override
   void onInit() {
@@ -12,12 +13,26 @@ class AuthController extends GetxController {
 
     auth.authStateChanges().listen((user) {
       if (user == null) {
-        loggedIn = false;
-        emailVerification = false;
+        loggedIn.value = false;
+        emailVerification.value = false;
       } else {
-        loggedIn = true;
+        loggedIn.value = true;
         if (user.emailVerified) {
-          emailVerification = true;
+          emailVerification.value = true;
+        }
+      }
+    });
+  }
+
+  checkLogInAndLogOut() {
+    auth.authStateChanges().listen((user) {
+      if (user == null) {
+        loggedIn.value = false;
+        emailVerification.value = false;
+      } else {
+        loggedIn.value = true;
+        if (user.emailVerified) {
+          emailVerification.value = user.emailVerified;
         }
       }
     });

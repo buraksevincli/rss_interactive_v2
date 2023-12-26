@@ -48,8 +48,8 @@ class HomePage extends StatelessWidget {
               )
             ],
           ),
-          const FeaturedAppWidget(),
-          const AllAppWidget(),
+          FeaturedAppWidget(),
+          AllAppWidget(),
         ],
       ),
     );

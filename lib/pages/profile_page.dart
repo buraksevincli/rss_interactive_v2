@@ -4,49 +4,22 @@ import 'package:rss_interactive_v2/constants/color_constants.dart';
 import 'package:rss_interactive_v2/controllers/auth_controller.dart';
 import 'package:rss_interactive_v2/widgets/login_panel.dart';
 
-class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key});
+// ignore: must_be_immutable
+class ProfilePage extends StatelessWidget {
+  ProfilePage({super.key});
 
-  @override
-  State<ProfilePage> createState() => _ProfilePageState();
-}
-
-bool loggedIn = false;
-bool emailVerification = false;
-
-class _ProfilePageState extends State<ProfilePage> {
   AuthController authController = Get.find();
 
   @override
-  void initState() {
-    super.initState();
-    authController.auth.authStateChanges().listen((user) {
-      if (mounted) {
-        if (user == null) {
-          setState(() {
-            loggedIn = false;
-            emailVerification = false;
-          });
-        } else {
-          setState(() {
-            loggedIn = true;
-            if (user.emailVerified) {
-              emailVerification = user.emailVerified;
-            }
-          });
-        }
-      }
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: ColorConstants.rssDarkBlue, body: checkState());
+    return Obx(() => Scaffold(
+        backgroundColor: ColorConstants.rssDarkBlue, body: checkState()));
   }
 
   Widget checkState() {
-    if (loggedIn && emailVerification) {
+    authController.checkLogInAndLogOut();
+    if (authController.loggedIn.value &&
+        authController.emailVerification.value) {
       return Container(
           padding: const EdgeInsets.all(20),
           width: Get.width,
@@ -93,7 +66,8 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ],
           ));
-    } else if (loggedIn && !emailVerification) {
+    } else if (authController.loggedIn.value &&
+        !authController.emailVerification.value) {
       return Container(
         alignment: Alignment.center,
         padding: const EdgeInsets.all(16),

@@ -1,31 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rss_interactive_v2/constants/text_constants.dart';
-import 'package:rss_interactive_v2/models/application_model.dart';
+import 'package:rss_interactive_v2/controllers/model_controller.dart';
 import 'package:rss_interactive_v2/pages/app_detail_page.dart';
-import 'package:rss_interactive_v2/services/rest_api.dart';
 import 'package:rss_interactive_v2/widgets/app_images_listview.dart';
 
-class FeaturedAppWidget extends StatefulWidget {
-  const FeaturedAppWidget({super.key});
+// ignore: must_be_immutable
+class FeaturedAppWidget extends StatelessWidget {
+  FeaturedAppWidget({super.key});
 
-  @override
-  State<FeaturedAppWidget> createState() => _FeaturedAppWidgetState();
-}
-
-class _FeaturedAppWidgetState extends State<FeaturedAppWidget> {
-  late Future<List<ApplicationModel>> fillList;
-
-  @override
-  void initState() {
-    super.initState();
-    fillList = readApplicationModelList(context);
-  }
+  ModelController modelController = Get.find();
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: fillList,
+      future: modelController.getModelList(context),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           var featuredAppModel = snapshot.data![2];

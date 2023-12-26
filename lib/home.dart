@@ -39,7 +39,7 @@ class Home extends StatelessWidget {
                   currentScreen = MarketPage();
                   break;
                 case 3:
-                  currentScreen = const ProfilePage();
+                  currentScreen = ProfilePage();
                   break;
                 default:
               }
