@@ -1,32 +1,22 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rss_interactive_v2/constants/color_constants.dart';
+import 'package:rss_interactive_v2/controllers/model_controller.dart';
 import 'package:rss_interactive_v2/models/coin_model.dart';
 import 'package:rss_interactive_v2/pages/profile_page.dart';
 import 'package:rss_interactive_v2/widgets/coin_card.dart';
 
-class MarketPage extends StatefulWidget {
-  const MarketPage({super.key});
+// ignore: must_be_immutable
+class MarketPage extends StatelessWidget {
+  MarketPage({super.key});
 
-  @override
-  State<MarketPage> createState() => _MarketPageState();
-}
-
-class _MarketPageState extends State<MarketPage> {
-  late final Future<List<CoinModel>> fillCoinList;
-
-  @override
-  void initState() {
-    super.initState();
-    fillCoinList = getCoinList();
-  }
+  ModelController modelController = Get.find();
 
   @override
   Widget build(BuildContext context) {
     return emailVerification
         ? FutureBuilder(
-            future: fillCoinList,
+            future: modelController.fillCoinList,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 List<CoinModel> coinList = snapshot.data!;
@@ -90,22 +80,5 @@ class _MarketPageState extends State<MarketPage> {
               ],
             ),
           );
-  }
-
-  Future<List<CoinModel>> getCoinList() async {
-    try {
-      var response = await Dio().get(
-        "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false&locale=tr",
-      );
-
-      List<CoinModel> coinList = [];
-      if (response.statusCode == 200) {
-        coinList =
-            (response.data as List).map((e) => CoinModel.fromJson(e)).toList();
-      }
-      return coinList;
-    } on DioException catch (e) {
-      return Future.error(e.message.toString());
-    }
   }
 }

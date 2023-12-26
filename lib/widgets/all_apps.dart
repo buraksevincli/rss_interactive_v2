@@ -1,10 +1,10 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rss_interactive_v2/constants/text_constants.dart';
 import 'package:rss_interactive_v2/models/application_model.dart';
 import 'package:rss_interactive_v2/pages/all_apps_page.dart';
 import 'package:rss_interactive_v2/pages/app_detail_page.dart';
+import 'package:rss_interactive_v2/services/rest_api.dart';
 
 class AllAppWidget extends StatefulWidget {
   const AllAppWidget({super.key});
@@ -19,7 +19,7 @@ class _AllAppWidgetState extends State<AllAppWidget> {
   @override
   void initState() {
     super.initState();
-    fillList = readApplicationJson();
+    fillList = readApplicationModelList(context);
   }
 
   @override
@@ -113,20 +113,5 @@ class _AllAppWidgetState extends State<AllAppWidget> {
     );
   }
 
-  Future<List<ApplicationModel>> readApplicationJson() async {
-    try {
-      String readingString = await DefaultAssetBundle.of(context)
-          .loadString("assets/datas/applications.json");
-
-      var jsonObJect = jsonDecode(readingString);
-
-      List<ApplicationModel> applicationModel = (jsonObJect as List)
-          .map((applicationMap) => ApplicationModel.fromJson(applicationMap))
-          .toList();
-
-      return applicationModel;
-    } catch (e) {
-      return Future.error(e.toString());
-    }
-  }
+  
 }

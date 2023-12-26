@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final currencyModel = currencyModelFromJson(jsonString);
-
 import 'dart:convert';
 
 NewsModel currencyModelFromJson(String str) => NewsModel.fromJson(json.decode(str));

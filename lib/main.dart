@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:rss_interactive_v2/constants/color_constants.dart';
 import 'package:rss_interactive_v2/firebase_options.dart';
 import 'package:rss_interactive_v2/home.dart';
+import 'package:rss_interactive_v2/main_binding.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // Binding'i başlatın
@@ -21,12 +22,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      initialBinding: MainBinding(),
       debugShowCheckedModeBanner: false,
       title: 'RSS Store',
       theme: ThemeData(
           appBarTheme:
               const AppBarTheme(backgroundColor: ColorConstants.rssDarkBlue)),
-      home: const Home(),
+      home: Home(),
     );
   }
 }

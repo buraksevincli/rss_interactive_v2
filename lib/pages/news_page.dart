@@ -1,32 +1,22 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rss_interactive_v2/constants/color_constants.dart';
+import 'package:rss_interactive_v2/controllers/model_controller.dart';
 import 'package:rss_interactive_v2/models/news_model.dart';
 import 'package:rss_interactive_v2/pages/profile_page.dart';
 import 'package:rss_interactive_v2/widgets/news_card.dart';
 
-class NewsPage extends StatefulWidget {
-  const NewsPage({super.key});
+// ignore: must_be_immutable
+class NewsPage extends StatelessWidget {
+  NewsPage({super.key});
 
-  @override
-  State<NewsPage> createState() => _NewsPageState();
-}
-
-class _NewsPageState extends State<NewsPage> {
-  late final Future<List<NewsModel>> fillNewsList;
-
-  @override
-  void initState() {
-    super.initState();
-    fillNewsList = getNewsModel();
-  }
+  ModelController modelController = Get.find();
 
   @override
   Widget build(BuildContext context) {
     return emailVerification
         ? FutureBuilder(
-            future: fillNewsList,
+            future: modelController.fillNewsList,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 List<NewsModel> newsList = snapshot.data!;
@@ -77,29 +67,5 @@ class _NewsPageState extends State<NewsPage> {
               ],
             ),
           );
-  }
-
-  Future<List<NewsModel>> getNewsModel() async {
-    try {
-      final options = Options(headers: {
-        "authorization": "apikey 4kB3Uc66TdSqjI1YM1bWDS:0jRhzdhMmS8gZtEnT9Ak2v",
-      });
-
-      final response = await Dio().get(
-          "https://api.collectapi.com/news/getNews?country=tr&tag=general",
-          options: options);
-
-      List<NewsModel> newsList = [];
-
-      if (response.statusCode == 200) {
-        final newsData = response.data as Map<String, dynamic>;
-        newsList = (newsData['result'] as List)
-            .map((e) => NewsModel.fromJson(e))
-            .toList();
-      }
-      return newsList;
-    } on DioException catch (e) {
-      return Future.error(e.message.toString());
-    }
   }
 }

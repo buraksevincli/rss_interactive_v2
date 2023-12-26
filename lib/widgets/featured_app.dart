@@ -1,9 +1,9 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rss_interactive_v2/constants/text_constants.dart';
 import 'package:rss_interactive_v2/models/application_model.dart';
 import 'package:rss_interactive_v2/pages/app_detail_page.dart';
+import 'package:rss_interactive_v2/services/rest_api.dart';
 import 'package:rss_interactive_v2/widgets/app_images_listview.dart';
 
 class FeaturedAppWidget extends StatefulWidget {
@@ -19,7 +19,7 @@ class _FeaturedAppWidgetState extends State<FeaturedAppWidget> {
   @override
   void initState() {
     super.initState();
-    fillList = readFeaturedAppJson();
+    fillList = readApplicationModelList(context);
   }
 
   @override
@@ -48,7 +48,7 @@ class _FeaturedAppWidgetState extends State<FeaturedAppWidget> {
                     sizedBoxWidth: 10,
                     width: 100,
                     height: 120,
-                    featuredAppModel: featuredAppModel,
+                    applicationModel: featuredAppModel,
                   ),
                 ),
                 Container(
@@ -89,22 +89,5 @@ class _FeaturedAppWidgetState extends State<FeaturedAppWidget> {
         }
       },
     );
-  }
-
-  Future<List<ApplicationModel>> readFeaturedAppJson() async {
-    try {
-      String readingString = await DefaultAssetBundle.of(context)
-          .loadString("assets/datas/applications.json");
-
-      var jsonObJect = jsonDecode(readingString);
-
-      List<ApplicationModel> featuredAppModel = (jsonObJect as List)
-          .map((featuredAppMap) => ApplicationModel.fromJson(featuredAppMap))
-          .toList();
-
-      return featuredAppModel;
-    } catch (e) {
-      return Future.error(e.toString());
-    }
   }
 }

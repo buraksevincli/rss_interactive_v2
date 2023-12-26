@@ -1,7 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rss_interactive_v2/constants/color_constants.dart';
+import 'package:rss_interactive_v2/controllers/auth_controller.dart';
 import 'package:rss_interactive_v2/widgets/login_panel.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -15,34 +15,26 @@ bool loggedIn = false;
 bool emailVerification = false;
 
 class _ProfilePageState extends State<ProfilePage> {
-  late FirebaseAuth auth;
-  String eMail = "";
-  String password = "";
-  String username = "";
-  String exception = "";
+  AuthController authController = Get.find();
 
   @override
   void initState() {
     super.initState();
-    auth = FirebaseAuth.instance;
-    auth.authStateChanges().listen((user) {
-      if (user == null) {
-        setState(() {
-          loggedIn = false;
-          emailVerification = false;
-          build(context);
-        });
-        print("oturum kapandı $loggedIn");
-      } else {
-        setState(() {
-          loggedIn = true;
-          if (user.emailVerified) {
-            emailVerification = user.emailVerified;
-          }
-          build(context);
-        });
-        print("oturum açıldı $loggedIn");
-        print(user.emailVerified);
+    authController.auth.authStateChanges().listen((user) {
+      if (mounted) {
+        if (user == null) {
+          setState(() {
+            loggedIn = false;
+            emailVerification = false;
+          });
+        } else {
+          setState(() {
+            loggedIn = true;
+            if (user.emailVerified) {
+              emailVerification = user.emailVerified;
+            }
+          });
+        }
       }
     });
   }
@@ -76,9 +68,11 @@ class _ProfilePageState extends State<ProfilePage> {
                           AssetImage("assets/images/user_profile.jpeg"),
                     ),
                   ),
-                  const SizedBox(height: 10,),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   Text(
-                    auth.currentUser!.email.toString(),
+                    authController.auth.currentUser!.email.toString(),
                     style: const TextStyle(
                         color: ColorConstants.white, fontSize: 16),
                   ),
@@ -89,9 +83,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 width: Get.width,
                 child: TextButton(
                   onPressed: () {
-                    setState(() {
-                      auth.signOut();
-                    });
+                    authController.auth.signOut();
                   },
                   child: const Text(
                     "Çıkış",
@@ -116,8 +108,8 @@ class _ProfilePageState extends State<ProfilePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "Lütfen, \n\n\"${auth.currentUser!.email}\" adresine gelen aktivasyon koduna tıklayın ve tekrar giriş yapın.",
-                style: TextStyle(color: Colors.white, fontSize: 20),
+                "Lütfen, \n\n\"${authController.auth.currentUser!.email}\" adresine gelen aktivasyon koduna tıklayın ve tekrar giriş yapın.",
+                style: const TextStyle(color: Colors.white, fontSize: 20),
               ),
               const SizedBox(
                 height: 15,
@@ -129,9 +121,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     color: ColorConstants.rssYellow),
                 child: TextButton(
                     onPressed: () {
-                      setState(() {
-                        auth.signOut();
-                      });
+                      authController.auth.signOut();
                     },
                     child: const Text(
                       "Anladım",
@@ -143,7 +133,7 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
       );
     } else {
-      return const LogInPanel();
+      return LogInPanel();
     }
   }
 }

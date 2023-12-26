@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -6,14 +5,14 @@ import 'package:rss_interactive_v2/models/application_model.dart';
 import 'package:rss_interactive_v2/pages/big_image_page.dart';
 
 class AppImagesListView extends StatelessWidget {
-  final ApplicationModel featuredAppModel;
+  final ApplicationModel applicationModel;
   final double width;
   final double height;
   final double sizedBoxWidth;
 
   const AppImagesListView({
     Key? key,
-    required this.featuredAppModel,
+    required this.applicationModel,
     required this.width,
     required this.height,
     required this.sizedBoxWidth,
@@ -22,35 +21,35 @@ class AppImagesListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(scrollDirection: Axis.horizontal, children: [
-      listElement(featuredAppModel.appPageImages!.image1!),
+      listElement(applicationModel.appPageImages!.image1!),
       SizedBox(
         width: sizedBoxWidth,
       ),
-      listElement(featuredAppModel.appPageImages!.image2!),
+      listElement(applicationModel.appPageImages!.image2!),
       SizedBox(
         width: sizedBoxWidth,
       ),
-      listElement(featuredAppModel.appPageImages!.image3!),
+      listElement(applicationModel.appPageImages!.image3!),
       SizedBox(
         width: sizedBoxWidth,
       ),
-      listElement(featuredAppModel.appPageImages!.image4!),
+      listElement(applicationModel.appPageImages!.image4!),
       SizedBox(
         width: sizedBoxWidth,
       ),
-      listElement(featuredAppModel.appPageImages!.image5!),
+      listElement(applicationModel.appPageImages!.image5!),
       SizedBox(
         width: sizedBoxWidth,
       ),
-      listElement(featuredAppModel.appPageImages!.image6!),
+      listElement(applicationModel.appPageImages!.image6!),
       SizedBox(
         width: sizedBoxWidth,
       ),
-      listElement(featuredAppModel.appPageImages!.image7!),
+      listElement(applicationModel.appPageImages!.image7!),
       SizedBox(
         width: sizedBoxWidth,
       ),
-      listElement(featuredAppModel.appPageImages!.image8!)
+      listElement(applicationModel.appPageImages!.image8!)
     ]);
   }
 

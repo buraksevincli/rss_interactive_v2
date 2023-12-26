@@ -138,7 +138,7 @@ class AppDetailPage extends StatelessWidget {
                       sizedBoxWidth: 10,
                       height: 100,
                       width: 120,
-                      featuredAppModel: applicationModel),
+                      applicationModel: applicationModel),
                 ),
                 Container(
                   alignment: Alignment.centerLeft,
