@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rss_interactive_v2/constants/color_constants.dart';
 import 'package:rss_interactive_v2/controllers/auth_controller.dart';
-import 'package:rss_interactive_v2/controllers/main_controller.dart';
 import 'package:rss_interactive_v2/services/firebase_auth.dart';
 import 'package:rss_interactive_v2/widgets/sign_in_panel.dart';
 
@@ -11,7 +10,6 @@ class LogInPanel extends StatelessWidget {
   LogInPanel({super.key});
 
   AuthController authController = Get.find();
-  MainController mainController = Get.put(MainController());
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +34,7 @@ class LogInPanel extends StatelessWidget {
                 height: 60,
                 child: TextField(
                   onChanged: (value) {
-                    mainController.checkEmail(value);
+                    authController.checkEmail(value);
                   },
                   style: const TextStyle(color: Colors.white),
                   keyboardType: TextInputType.emailAddress,
@@ -59,7 +57,7 @@ class LogInPanel extends StatelessWidget {
                 height: 60,
                 child: TextField(
                   onChanged: (value) {
-                    mainController.checkPassword(value);
+                    authController.checkPassword(value);
                   },
                   keyboardType: TextInputType.visiblePassword,
                   style: const TextStyle(color: ColorConstants.white),
@@ -82,7 +80,7 @@ class LogInPanel extends StatelessWidget {
                 width: Get.width,
                 height: 40,
                 child: Text(
-                  mainController.exception.value,
+                  authController.exception.value,
                   style: const TextStyle(color: ColorConstants.white),
                 ),
               ),
@@ -97,7 +95,7 @@ class LogInPanel extends StatelessWidget {
                       shape: MaterialStateProperty.all(RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10)))),
                   onPressed: () {
-                    mainController.checkLogIn(authController.auth);
+                    authController.checkLogIn(authController.auth);
                   },
                   child: const Text(
                     "Giriş Yap",

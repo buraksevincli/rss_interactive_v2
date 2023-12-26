@@ -3,14 +3,12 @@ import 'package:get/get.dart';
 import 'package:rss_interactive_v2/constants/color_constants.dart';
 import 'package:rss_interactive_v2/constants/text_constants.dart';
 import 'package:rss_interactive_v2/controllers/auth_controller.dart';
-import 'package:rss_interactive_v2/controllers/main_controller.dart';
 
 // ignore: must_be_immutable
 class SignInPanel extends StatelessWidget {
   SignInPanel({super.key});
 
-  AuthController controller = Get.find();
-  MainController mainController = Get.put(MainController());
+  AuthController authController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +39,7 @@ class SignInPanel extends StatelessWidget {
                     height: 60,
                     child: TextField(
                       onChanged: (value) {
-                        mainController.checkEmail(value);
+                        authController.checkEmail(value);
                       },
                       style: const TextStyle(color: Colors.white),
                       keyboardType: TextInputType.emailAddress,
@@ -64,7 +62,7 @@ class SignInPanel extends StatelessWidget {
                     height: 60,
                     child: TextField(
                       onChanged: (value) {
-                        mainController.checkPassword(value);
+                        authController.checkPassword(value);
                       },
                       keyboardType: TextInputType.visiblePassword,
                       style: const TextStyle(color: ColorConstants.white),
@@ -89,7 +87,7 @@ class SignInPanel extends StatelessWidget {
                     width: Get.width,
                     height: 40,
                     child: Text(
-                      mainController.exception.value,
+                      authController.exception.value,
                       style: const TextStyle(color: ColorConstants.white),
                     ),
                   ),
@@ -105,7 +103,7 @@ class SignInPanel extends StatelessWidget {
                               RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10)))),
                       onPressed: () {
-                        mainController.checkSignIn(controller.auth);
+                        authController.checkSignIn(authController.auth);
                       },
                       child: const Text(
                         "Kayıt Ol",
