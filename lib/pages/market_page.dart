@@ -62,21 +62,25 @@ class MarketPage extends StatelessWidget {
             alignment: Alignment.center,
             width: Get.width,
             height: Get.height,
-            child: const Column(
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
+                const Icon(
                   Icons.warning_rounded,
-                  size: 100,
+                  size: 70,
                   color: ColorConstants.rssYellow,
                 ),
-                SizedBox(
-                  height: 10,
+                const SizedBox(
+                  height: 20,
                 ),
-                Text(
-                  "Piyasalara erişmek için lütfen giriş yapınız.",
-                  style: TextStyle(color: ColorConstants.white, fontSize: 20),
-                  textAlign: TextAlign.center,
+                Container(
+                  width: Get.width,
+                  padding: const EdgeInsets.all(16),
+                  child: const Text(
+                    "Piyasalara erişmek için lütfen giriş yapınız.",
+                    style: TextStyle(color: ColorConstants.white, fontSize: 18),
+                    textAlign: TextAlign.center,
+                  ),
                 ),
               ],
             ),
