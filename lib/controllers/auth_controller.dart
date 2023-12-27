@@ -15,17 +15,7 @@ class AuthController extends GetxController {
     super.onInit();
     auth = FirebaseAuth.instance;
 
-    auth.authStateChanges().listen((user) {
-      if (user == null) {
-        loggedIn.value = false;
-        emailVerification.value = false;
-      } else {
-        loggedIn.value = true;
-        if (user.emailVerified) {
-          emailVerification.value = true;
-        }
-      }
-    });
+    checkLogInAndLogOut();
   }
 
   checkLogInAndLogOut() {
