@@ -7,8 +7,4 @@ class MainController extends GetxController {
   setIndex(int value) {
     bottomNavBarIndex.value = value;
   }
-
-  setCurrencyPage(int page) {
-    selectedCurrencyPage.value = page;
-  }
 }
