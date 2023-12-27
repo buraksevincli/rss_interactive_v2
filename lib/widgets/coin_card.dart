@@ -31,7 +31,7 @@ class CoinCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                        width: Get.width/4,
+                        width: Get.width / 4,
                         alignment: Alignment.centerLeft,
                         child: Text(
                           "${coinModel.symbol!.toUpperCase()}/USDT",
@@ -82,7 +82,8 @@ class CoinCard extends StatelessWidget {
                       padding: const EdgeInsets.all(10),
                       alignment: Alignment.center,
                       child: Text(
-                          "% ${coinModel.priceChangePercentage24H.toStringAsFixed(2)}"),
+                          "% ${coinModel.priceChangePercentage24H.toStringAsFixed(2)}",
+                          style: const TextStyle(color: ColorConstants.white,fontWeight: FontWeight.w500)),
                     ),
                   )
                 ],
